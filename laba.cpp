@@ -11,8 +11,6 @@ string removeLeadingZeros(string numberString) {
 }
 
 int compareStrings(string firstNumberString, string secondNumberString) {
-  firstNumberString = removeLeadingZeros(firstNumberString);
-  secondNumberString = removeLeadingZeros(secondNumberString);
 
   if (firstNumberString.size() < secondNumberString.size()) {
     return -1;
@@ -326,3 +324,4 @@ int main() {
 
   return 0;
 }
+
