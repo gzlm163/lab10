@@ -10,22 +10,23 @@ string removeLeadingZeros(string numberString) {
   return numberString;
 }
 
-int compareStrings(string firstNumberString, string secondNumberString) {
 
-  if (firstNumberString.size() < secondNumberString.size()) {
+int compareNumbers(string firstNumber, string secondNumber) {
+
+  if (firstNumber.size() < secondNumber.size()) {
     return -1;
   }
-  if (firstNumberString.size() > secondNumberString.size()) {
+  if (firstNumber.size() > secondNumber.size()) {
     return 1;
   }
 
   int currentIndex;
   currentIndex = 0;
-  while (currentIndex < firstNumberString.size()) {
-    if (firstNumberString[currentIndex] < secondNumberString[currentIndex]) {
+  while (currentIndex < firstNumber.size()) {
+    if (firstNumber[currentIndex] < secondNumber[currentIndex]) {
       return -1;
     }
-    if (firstNumberString[currentIndex] > secondNumberString[currentIndex]) {
+    if (firstNumber[currentIndex] > secondNumber[currentIndex]) {
       return 1;
     }
     
@@ -35,42 +36,42 @@ int compareStrings(string firstNumberString, string secondNumberString) {
   return 0;
 }
 
-string addStrings(string firstNumberString, string secondNumberString) {
+string addNumbers(string firstNumber, string secondNumber) {
   string resultString;
   resultString = "";
 
   int indexFirstNumber;
   int indexSecondNumber;
-  int carryValue;
-  int sumValue;
+  int carryDigit;
+  int sumCurrentDigits;
   int digitValueFirstNumber;
   int digitValueSecondNumber;
   int newDigitValue;
   char newDigitChar;
 
-  indexFirstNumber = firstNumberString.size() - 1;
-  indexSecondNumber = secondNumberString.size() - 1;
-  carryValue = 0;
+  indexFirstNumber = firstNumber.size() - 1;
+  indexSecondNumber = secondNumber.size() - 1;
+  carryDigit = 0;
 
-  while (indexFirstNumber >= 0 || indexSecondNumber >= 0 || carryValue > 0) {
-    sumValue = carryValue;
+  while (indexFirstNumber >= 0 || indexSecondNumber >= 0 || carryDigit > 0) {
+    sumCurrentDigits = carryDigit;
     digitValueFirstNumber = 0;
     digitValueSecondNumber = 0;
 
     if (indexFirstNumber >= 0) {
-      digitValueFirstNumber = firstNumberString[indexFirstNumber] - '0';
-      sumValue = sumValue + digitValueFirstNumber;
+      digitValueFirstNumber = firstNumber[indexFirstNumber] - '0';
+      sumCurrentDigits = sumCurrentDigits + digitValueFirstNumber;
     }
 
     if (indexSecondNumber >= 0) {
-      digitValueSecondNumber = secondNumberString[indexSecondNumber] - '0';
-      sumValue = sumValue + digitValueSecondNumber;
+      digitValueSecondNumber = secondNumber[indexSecondNumber] - '0';
+      sumCurrentDigits = sumCurrentDigits + digitValueSecondNumber;
     }
 
-    newDigitValue = sumValue % 10;
+    newDigitValue = sumCurrentDigits % 10;
     newDigitChar = char(newDigitValue + '0');
     resultString = newDigitChar + resultString;
-    carryValue = sumValue / 10;
+    carryDigit = sumCurrentDigits / 10;
 
     --indexFirstNumber;
     --indexSecondNumber;
@@ -79,7 +80,7 @@ string addStrings(string firstNumberString, string secondNumberString) {
   return resultString;
 }
 
-string subtractStrings(string firstNumberString, string secondNumberString) {
+string subtractNumber(string firstNumber, string secondNumber) {
   string resultString;
   resultString = "";
 
@@ -88,31 +89,31 @@ string subtractStrings(string firstNumberString, string secondNumberString) {
   int borrowValue;
   int digitValueFirstNumber;
   int digitValueSecondNumber;
-  int differenceValue;
+  int difference;
   char newDigitChar;
 
-  indexFirstNumber = firstNumberString.size() - 1;
-  indexSecondNumber = secondNumberString.size() - 1;
+  indexFirstNumber = firstNumber.size() - 1;
+  indexSecondNumber = secondNumber.size() - 1;
   borrowValue = 0;
 
   while (indexFirstNumber >= 0) {
-    digitValueFirstNumber = firstNumberString[indexFirstNumber] - '0';
+    digitValueFirstNumber = firstNumber[indexFirstNumber] - '0';
     digitValueSecondNumber = 0;
 
     if (indexSecondNumber >= 0) {
-      digitValueSecondNumber = secondNumberString[indexSecondNumber] - '0';
+      digitValueSecondNumber = secondNumber[indexSecondNumber] - '0';
     }
 
-    differenceValue = digitValueFirstNumber - borrowValue - digitValueSecondNumber;
+    difference = digitValueFirstNumber - borrowValue - digitValueSecondNumber;
 
-    if (differenceValue < 0) {
-      differenceValue = differenceValue + 10;
+    if (difference < 0) {
+      difference = difference + 10;
       borrowValue = 1;
     } else {
       borrowValue = 0;
     }
 
-    newDigitChar = char(differenceValue + '0');
+    newDigitChar = char(difference + '0');
     resultString = newDigitChar + resultString;
 
     --indexFirstNumber;
@@ -123,7 +124,7 @@ string subtractStrings(string firstNumberString, string secondNumberString) {
   return resultString;
 }
 
-string multiplyStrings(string firstNumberString, string secondNumberString) {
+string multiplyNumbers(string firstNumber, string secondNumber) {
   int sizeFirstNumber;
   int sizeSecondNumber;
   int indexFirstNumber;
@@ -131,39 +132,39 @@ string multiplyStrings(string firstNumberString, string secondNumberString) {
   int digitValueFirstNumber;
   int digitValueSecondNumber;
   int multiplicationValue;
-  int positionRight;
-  int positionLeft;
-  int currentRightDigitValue;
-  int sumLeftRight;
-  int newRightDigitValue;
-  int carryValue;
-  int currentLeftDigitValue;
+  int unitsPosition;
+  int tensPosition;
+  int currentUnitsValue;
+  int sumBeforeCarry;
+  int newUnitsDigit;
+  int carryDigit;
+  int currentTensDigit;
   string resultString;
 
-  sizeFirstNumber = firstNumberString.size();
-  sizeSecondNumber = secondNumberString.size();
+  sizeFirstNumber = firstNumber.size();
+  sizeSecondNumber = secondNumber.size();
   resultString = string(sizeFirstNumber + sizeSecondNumber, '0');
   indexFirstNumber = sizeFirstNumber - 1;
 
   while (indexFirstNumber >= 0) {
-    digitValueFirstNumber = firstNumberString[indexFirstNumber] - '0';
+    digitValueFirstNumber = firstNumber[indexFirstNumber] - '0';
     indexSecondNumber = sizeSecondNumber - 1;
 
     while (indexSecondNumber >= 0) {
-      digitValueSecondNumber = secondNumberString[indexSecondNumber] - '0';
+      digitValueSecondNumber = secondNumber[indexSecondNumber] - '0';
       multiplicationValue = digitValueFirstNumber * digitValueSecondNumber;
-      positionRight = indexFirstNumber + indexSecondNumber + 1;
-      positionLeft = indexFirstNumber + indexSecondNumber;
+      unitsPosition = indexFirstNumber + indexSecondNumber + 1;
+      tensPosition = indexFirstNumber + indexSecondNumber;
       
-      currentRightDigitValue = resultString[positionRight] - '0';
-      sumLeftRight = multiplicationValue + currentRightDigitValue;
-      newRightDigitValue = sumLeftRight % 10;
-      carryValue = sumLeftRight / 10;
-      resultString[positionRight] = char(newRightDigitValue + '0');
+      currentUnitsValue = resultString[unitsPosition] - '0';
+      sumBeforeCarry = multiplicationValue + currentUnitsValue;
+      newUnitsDigit = sumBeforeCarry % 10;
+      carryDigit = sumBeforeCarry / 10;
+      resultString[unitsPosition] = char(newUnitsDigit + '0');
       
-      currentLeftDigitValue = resultString[positionLeft] - '0';
-      currentLeftDigitValue = currentLeftDigitValue + carryValue;
-      resultString[positionLeft] = char(currentLeftDigitValue + '0');
+      currentTensDigit = resultString[tensPosition] - '0';
+      currentTensDigit = currentTensDigit + carryDigit;
+      resultString[tensPosition] = char(currentTensDigit + '0');
 
       --indexSecondNumber;
     }
@@ -176,15 +177,15 @@ string multiplyStrings(string firstNumberString, string secondNumberString) {
   return resultString;
 }
 
-string divideStrings(string dividendString, string divisorString) {
+string divideNumber(string dividend, string divisor) {
   string resultString;
-  string currentValueString;
-  string nextDigitString;
-  string multiplicationResultString;
-  string multiplicationDigitString;
-  string multiplicationProductString;
+  string currentDividend;
+  string checkDigit;
+  string trialProduct;
+  string digitToMultiply;
+  string productToSubtract;
   int indexCurrentDigit;
-  int quotientDigitValue;
+  int quotientDigit;
   int nextDigitValue;
   int comparisonResult;
   char nextDigitCharForMultiply;
@@ -193,41 +194,41 @@ string divideStrings(string dividendString, string divisorString) {
   char multiplicationDigitChar;
 
   resultString = "";
-  currentValueString = "0";
+  currentDividend = "0";
   indexCurrentDigit = 0;
 
-  while (indexCurrentDigit < dividendString.size()) {
-    if (currentValueString == "0") {
-      currentValueString = "";
+  while (indexCurrentDigit < dividend.size()) {
+    if (currentDividend == "0") {
+      currentDividend = "";
     }
 
-    nextDigitChar = dividendString[indexCurrentDigit];
-    currentValueString = currentValueString + nextDigitChar;
-    currentValueString = removeLeadingZeros(currentValueString);
-    quotientDigitValue = 0;
+    nextDigitChar = dividend[indexCurrentDigit];
+    currentDividend = currentDividend + nextDigitChar;
+    currentDividend = removeLeadingZeros(currentDividend);
+    quotientDigit = 0;
 
-    while (quotientDigitValue < 9) {
-      nextDigitValue = quotientDigitValue + 1;
+    while (quotientDigit < 9) {
+      nextDigitValue = quotientDigit + 1;
       nextDigitCharForMultiply = char(nextDigitValue + '0');
-      nextDigitString = "";
-      nextDigitString = nextDigitString + nextDigitCharForMultiply;
-      multiplicationResultString = multiplyStrings(divisorString, nextDigitString);
-      comparisonResult = compareStrings(multiplicationResultString, currentValueString);
+      checkDigit = "";
+      checkDigit = checkDigit + nextDigitCharForMultiply;
+      trialProduct = multiplyNumbers(divisor, checkDigit);
+      comparisonResult = compareNumbers(trialProduct, currentDividend);
 
       if (comparisonResult <= 0) {
-        ++quotientDigitValue;
+        ++quotientDigit;
       } else {
         break;
       }
     }
 
-    quotientDigitChar = char(quotientDigitValue + '0');
+    quotientDigitChar = char(quotientDigit + '0');
     resultString = resultString + quotientDigitChar;
-    multiplicationDigitString = "";
-    multiplicationDigitChar = char(quotientDigitValue + '0');
-    multiplicationDigitString = multiplicationDigitChar;
-    multiplicationProductString = multiplyStrings(divisorString, multiplicationDigitString);
-    currentValueString = subtractStrings(currentValueString, multiplicationProductString);
+    digitToMultiply = "";
+    multiplicationDigitChar = char(quotientDigit + '0');
+    digitToMultiply = multiplicationDigitChar;
+    productToSubtract = multiplyNumbers(divisor, digitToMultiply);
+    currentDividend = subtractNumber(currentDividend, productToSubtract);
 
     ++indexCurrentDigit;
   }
@@ -237,55 +238,55 @@ string divideStrings(string dividendString, string divisorString) {
 }
 
 int main() {
-  string firstNumberString;
-  string secondNumberString;
+  string firstNumber;
+  string secondNumber;
   char operationSymbol;
 
   cout << " Enter first integer: ";
-  cin >> firstNumberString;
+  cin >> firstNumber;
   cout << " Enter operation (+, -, *, /, <, >, =): ";
   cin >> operationSymbol;
   cout << " Enter second integer: ";
-  cin >> secondNumberString;
+  cin >> secondNumber;
 
   if (operationSymbol == '+') {
     string resultString;
     
-    resultString = addStrings(firstNumberString, secondNumberString);
+    resultString = addNumbers(firstNumber, secondNumber);
     
-    cout << firstNumberString << " + " << secondNumberString << " = " << resultString << endl;
+    cout << firstNumber << " + " << secondNumber << " = " << resultString << endl;
   }
 
   if (operationSymbol == '-') {
     string resultString;
     
-    resultString = subtractStrings(firstNumberString, secondNumberString);
+    resultString = subtractNumber(firstNumber, secondNumber);
     
-    cout << firstNumberString << " - " << secondNumberString << " = " << resultString << endl;
+    cout << firstNumber << " - " << secondNumber << " = " << resultString << endl;
   }
 
   if (operationSymbol == '*') {
     string resultString;
     
-    resultString = multiplyStrings(firstNumberString, secondNumberString);
+    resultString = multiplyNumbers(firstNumber, secondNumber);
     
-    cout << firstNumberString << " * " << secondNumberString << " = " << resultString << endl;
+    cout << firstNumber << " * " << secondNumber << " = " << resultString << endl;
   }
 
   if (operationSymbol == '/') {
     string resultString;
     
-    resultString = divideStrings(firstNumberString, secondNumberString);
+    resultString = divideNumber(firstNumber, secondNumber);
     
-    cout << firstNumberString << " / " << secondNumberString << " = " << resultString << endl;
+    cout << firstNumber << " / " << secondNumber << " = " << resultString << endl;
   }
 
   if (operationSymbol == '>') {
     int comparisonResult;
     
-    comparisonResult = compareStrings(firstNumberString, secondNumberString);
+    comparisonResult = compareNumbers(firstNumber, secondNumber);
     
-    cout << firstNumberString << " > " << secondNumberString << " : ";
+    cout << firstNumber << " > " << secondNumber << " : ";
     
     if (comparisonResult == 1) {
       cout << " true " << endl;
@@ -297,9 +298,9 @@ int main() {
   if (operationSymbol == '<') {
     int comparisonResult;
     
-    comparisonResult = compareStrings(firstNumberString, secondNumberString);
+    comparisonResult = compareNumbers(firstNumber, secondNumber);
     
-    cout << firstNumberString << " < " << secondNumberString << " : ";
+    cout << firstNumber << " < " << secondNumber << " : ";
     
     if (comparisonResult == -1) {
       cout << " true " << endl;
@@ -311,9 +312,9 @@ int main() {
   if (operationSymbol == '=') {
     int comparisonResult;
     
-    comparisonResult = compareStrings(firstNumberString, secondNumberString);
+    comparisonResult = compareNumbers(firstNumber, secondNumber);
     
-    cout << firstNumberString << " = " << secondNumberString << " : ";
+    cout << firstNumber << " = " << secondNumber << " : ";
     
     if (comparisonResult == 0) {
       cout << " true " << endl;
@@ -324,4 +325,5 @@ int main() {
 
   return 0;
 }
+
 
